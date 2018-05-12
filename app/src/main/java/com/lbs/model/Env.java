@@ -8,14 +8,27 @@ import java.util.Properties;
 
 public class Env {
 
+    private Env () {}
+
+    private static Env env;
+
+    public static Env getInstance() {
+        if (env == null){
+            env = new Env();
+        }
+        if (props == null){
+            props = new Properties();
+        }
+        return env;
+    }
 
     private static Properties props;
 
-    public static void addProperty(String name, Object value){
-        props.put(name, value);
+    public static void addProperty(String name, String value){
+        props.setProperty(name, value);
     }
 
-    public static Object getProperty(String name){
+    public static String getProperty(String name){
         return props.getProperty(name);
     }
 

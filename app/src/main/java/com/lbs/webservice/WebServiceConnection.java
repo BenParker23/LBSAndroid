@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.lbs.model.DBObject;
 import com.lbs.model.MUser;
 
 import java.io.BufferedInputStream;
@@ -18,42 +19,55 @@ import java.net.URL;
  * Created by BenPa on 12/05/2018.
  */
 
-public class WebServiceConnection extends AsyncTask{
-    @Override
-    protected Object doInBackground(Object[] objects) {
-        getMapsJson();
-        return null;
-    }
+public class WebServiceConnection {
 
-    public String getMapsJson()
+    private static final String BASE_URL = "http://10.0.2.2:8080/";
+    private static String requestType;
+    private static String urlToSend = BASE_URL;
+
+
+    /** The public interface method
+     *  Returns a JSON String of the object **/
+    public static String makeRequest()
     {
+        if (requestType == null){
+            Log.e("WebServiceConnection", "RequestType is not set");
+            return null;
+        }
         String output = "";
         HttpURLConnection connection = null;
         try
         {
-            URL serverUrl = new URL("http://10.0.2.2:8080/login");
+            URL serverUrl = new URL(urlToSend);
             connection = (HttpURLConnection) serverUrl.openConnection();
             connection.setRequestMethod("GET");
             InputStream in = new BufferedInputStream(connection.getInputStream());
             output = readStream(in);
-            Gson gson = new Gson();
-            MUser user = new MUser();
-            user.fromJson(output);
-            Log.d("Name", user.name);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             Log.d("Minimap", e.toString());
         }
-        finally
-        {
+        finally {
             connection.disconnect();
         }
-        Log.d("Minimap", "JSON: " + output);
+        urlToSend = BASE_URL;
+        requestType = null;
         return output;
     }
 
-    private String readStream(InputStream in)
+
+    public WebServiceConnection(String urlParams, String requestType){
+        this.requestType = requestType;
+        if (urlParams == null){
+            Log.e("WebServiceConnection", "Please specify a parameter for the request");
+            return;
+        }
+        else {
+            urlToSend += urlParams;
+        }
+    }
+
+    private static String readStream(InputStream in)
     {
         try
         {
@@ -63,7 +77,6 @@ public class WebServiceConnection extends AsyncTask{
 
             while((line = reader.readLine()) != null)
                 output += line;
-
             return output;
         }
         catch (IOException e)
@@ -72,6 +85,5 @@ public class WebServiceConnection extends AsyncTask{
             return "";
         }
     }
-
 
 }
