@@ -6,4 +6,42 @@
     android:layout_height="match_parent"
     tools:context="com.lbs.view.MainMenuActivity">
 
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="88dp"
+            android:layout_height="69dp"
+            app:srcCompat="@drawable/lbslogonew"
+            android:layout_marginLeft="140dp" />
+
+        <Button
+            android:id="@+id/manageProdsBut"
+            android:text="@string/action_manage_products"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="270dp"/>
+
+        <Button
+            android:id="@+id/marketInfoBut"
+            android:text="@string/action_market_info"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="350dp"/>
+
+        <Button
+            android:id="@+id/storeTrafficBut"
+            android:text="@string/action_store_traffic"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="430dp"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,7 @@
 package com.lbs.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 /**
@@ -12,23 +14,24 @@ public class MUser extends DBObject {
     private String name;
     private String email;
     private String password;
-    private int M_User_ID;
-    private int M_BPartner_ID;
+    private int m_BPartner_ID;
+    private int m_user_id;
 
-    public int getM_User_ID() {
-        return M_User_ID;
+
+    public int getM_user_id() {
+        return m_user_id;
     }
 
-    public void setM_User_ID(int m_User_ID) {
-        M_User_ID = m_User_ID;
+    public void setM_user_id(int m_user_id) {
+        this.m_user_id = m_user_id;
     }
 
-    public int getM_BPartner_ID() {
-        return M_BPartner_ID;
+    public int getm_BPartner_ID() {
+        return m_BPartner_ID;
     }
 
-    public void setM_BPartner_ID(int m_BPartner_ID) {
-        M_BPartner_ID = m_BPartner_ID;
+    public void setm_BPartner_ID(int m_BPartner_ID) {
+        this.m_BPartner_ID = m_BPartner_ID;
     }
 
     public String getUsername() {
@@ -68,12 +71,16 @@ public class MUser extends DBObject {
         return 0;
     }
 
+
     @Override
     public int fromJson(String json) {
-        Gson gson = new Gson();
         MUser user = gson.fromJson(json, MUser.class);
         this.name = user.getName();
-        this.M_User_ID = user.getM_User_ID();
+        this.m_user_id = user.getM_user_id();
+        this.email = user.getEmail();
+        this.m_BPartner_ID = user.getm_BPartner_ID();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
         return 1;
     }
 }

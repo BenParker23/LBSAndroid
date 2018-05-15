@@ -5,4 +5,7 @@
     <string name="username">Username</string>
     <string name="action_login">Login</string>
     <string name="action_signup">No Account? Sign Up</string>
+    <string name="action_manage_products">Manage Products</string>
+    <string name="action_store_traffic">Store Traffic</string>
+    <string name="action_market_info">Local Market Info</string>
 </resources>

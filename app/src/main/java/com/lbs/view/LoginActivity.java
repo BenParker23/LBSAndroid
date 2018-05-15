@@ -69,26 +69,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view.getId() == loginBut.getId()){
             if (username.getText() != null && pass.getText() != null){
                 MUser user = new MUser();
-                user.setUsername("BenParker93");
-                user.setPassword("rangers93");
+                user.setUsername(username.getText().toString());
+                user.setPassword(pass.getText().toString());
                 LoginAuthenticationRequest lar = new LoginAuthenticationRequest();
                 lar.execute(user);
+
                 /** Horrible disgusting hack **/
-                while (lar.getStatus().equals(AsyncTask.Status.RUNNING) && lar.isComplete == false){
-                    Log.e("Runngin","Rnning");
-                }
+                while (lar.getStatus().equals(AsyncTask.Status.RUNNING) && lar.isComplete == false){}
+
                 if (lar.getAuthenticatedUser() == null){
-                    Log.e("Auth", "Auth failed");
                     Toast.makeText(this.getApplicationContext(), "Authentication Failed. Please try again", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Log.e("USer", lar.getAuthenticatedUser().getName());
-                    Env env = Env.getInstance();
-                    env.addProperty("LoggedInUser", String.valueOf(lar.getAuthenticatedUser().getM_User_ID()));
-                    env.addProperty("LoggedInUserActive", "true");
-                    String userID = env.getProperty("LoggedInUser");
-                    Log.e("USer22", userID);
-
+                    Env.getInstance().addProperty("LoggedInUser", lar.getAuthenticatedUser());
+                    Env.getInstance().addProperty("LoggedInUserActive", true);
                     Intent mainMenu = new Intent(this.getApplicationContext(), MainMenuActivity.class);
                     startActivity(mainMenu);
                 }
